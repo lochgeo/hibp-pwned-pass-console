@@ -82,14 +82,8 @@ namespace PwnedPasswords
 
         static async Task<List<string>> GetPwnedHashesAsync(string hashPrefix)
         {
-            string resp = string.Empty;
-
-            HttpResponseMessage response = await client.GetAsync("/range/" + hashPrefix);
-
-            if (response.IsSuccessStatusCode)
-                resp = await response.Content.ReadAsStringAsync();
-
-            return resp.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+            string response = await client.GetStringAsync("/range/" + hashPrefix);
+            return response.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
         }
     }
 }
